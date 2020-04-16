@@ -37,3 +37,10 @@ class Solution:
                 return False
             low = max(low, 0)
         return low is 0
+
+    def removeElement(self, nums: List[int], val: int) -> int:
+        len = 0
+        for num in nums:
+            if num is not val:
+                nums[len], len = num, len + 1
+        return len
