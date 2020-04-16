@@ -27,3 +27,13 @@ class Solution:
             prev.next = ListNode(adder)
         
         return dummy.next
+
+    def checkValidString(self, s: str) -> bool:
+        low, high = 0, 0
+        for ch in s:
+            low += 1 if ch is '(' else -1
+            high += -1 if ch is ')' else 1
+            if (high < 0):
+                return False
+            low = max(low, 0)
+        return low is 0
