@@ -99,3 +99,17 @@ class Solution:
         if nums[start] >= target:
             return start
         return end
+
+    def lengthOfLastWord(self, s: str) -> int:
+        if not s:
+            return 0
+        
+        n, last = len(s), -1
+        while last >= -n and s[last] == ' ':
+            last -= 1
+        
+        i = last
+        while i >= -n and s[i] != ' ':
+            i -= 1
+        
+        return last - i
