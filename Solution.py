@@ -44,3 +44,39 @@ class Solution:
             if num is not val:
                 nums[len], len = num, len + 1
         return len
+
+    def findSubstring(self, s: str, words: List[str]) -> List[int]:
+        if not s or not words or not words[0]:
+            return []
+        
+        freq = {}
+        for word in words:
+            freq[word] = freq[word] + 1 if word in freq else 1
+        
+        result = []
+        k = len(words[0])
+        n = len(s)
+        for i in range(k):
+            start = i
+            wordCount = len(words)
+            temp = {}
+            
+            for j in range(i, n, k):
+                sub = s[j : j + k]
+                if sub in freq:
+                    temp[sub] = temp[sub] + 1 if sub in temp else 1
+                    wordCount -= 1
+                    
+                    while temp[sub] > freq[sub]:
+                        str = s[start : start + k]
+                        start += k
+                        temp[str] -= 1
+                        wordCount += 1
+                    
+                    if wordCount == 0:
+                        result.append(start)
+                else:
+                    temp = {}
+                    wordCount = len(words)
+                    start = j + k
+        return result
