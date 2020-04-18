@@ -172,3 +172,14 @@ class Solution:
                 grid[i][j] += min(grid[i - 1][j], grid[i][j - 1])
         
         return grid[-1][-1]
+
+    def removeDuplicates(self, nums: List[int]) -> int:
+        if not nums or len(nums) == 0:
+            return 0
+        
+        n = 0
+        for num in nums:
+            if n < 2 or nums[n - 2] < num:
+                nums[n] = num
+                n += 1
+        return n
