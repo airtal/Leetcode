@@ -132,3 +132,25 @@ class Solution:
             x, y = x1, y1
         
         return matrix
+
+    def rotateRight(self, head: ListNode, k: int) -> ListNode:
+        if k == 0 or not head:
+            return head
+        
+        p, n = head, 0
+        while p:
+            n, p = n + 1, p.next
+            
+        k %= n
+        if k == 0:
+            return head
+        
+        p, q = head, head
+        for i in range(k):
+            p = p.next
+        
+        while p.next:
+            p, q = p.next, q.next
+        
+        ans, q.next, p.next = q.next, None, head
+        return ans
