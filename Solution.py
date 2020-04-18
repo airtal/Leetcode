@@ -113,3 +113,22 @@ class Solution:
             i -= 1
         
         return last - i
+
+    def generateMatrix(self, n: int) -> List[List[int]]:
+        if n <= 0:
+            return []
+        
+        matrix = [[0] * n for _ in range(n)]
+        dx = [0, 1, 0, -1]
+        dy = [1, 0, -1, 0]
+        
+        x, y, d = 0, 0, 0
+        for num in range(n * n):
+            matrix[x][y] = num + 1
+            x1, y1 = x + dx[d], y + dy[d]
+            if x1 < 0 or x1 >= n or y1 < 0 or y1 >= n or matrix[x1][y1] != 0:
+                d = (d + 1) % 4
+                x1, y1 = x + dx[d], y + dy[d]
+            x, y = x1, y1
+        
+        return matrix
