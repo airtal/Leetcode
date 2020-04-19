@@ -1,4 +1,5 @@
 class Solution:
+    # https://leetcode.com/problems/two-sum
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         dict = {}
         for i in range(len(nums)):
@@ -6,6 +7,7 @@ class Solution:
                 return [dict[target - nums[i]], i]
             dict[nums[i]] = i
 
+    # https://leetcode.com/problems/add-two-numbers
     def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
         adder = 0
         dummy = ListNode(-1)
@@ -28,6 +30,7 @@ class Solution:
         
         return dummy.next
 
+    # https://leetcode.com/problems/valid-parenthesis-string
     def checkValidString(self, s: str) -> bool:
         low, high = 0, 0
         for ch in s:
@@ -38,6 +41,7 @@ class Solution:
             low = max(low, 0)
         return low is 0
 
+    # https://leetcode.com/problems/remove-element/
     def removeElement(self, nums: List[int], val: int) -> int:
         len = 0
         for num in nums:
@@ -45,6 +49,7 @@ class Solution:
                 nums[len], len = num, len + 1
         return len
 
+    # https://leetcode.com/problems/substring-with-concatenation-of-all-words/
     def findSubstring(self, s: str, words: List[str]) -> List[int]:
         if not s or not words or not words[0]:
             return []
@@ -81,6 +86,7 @@ class Solution:
                     start = j + k
         return result
 
+    # https://leetcode.com/problems/search-insert-position/
     def searchInsert(self, nums: List[int], target: int) -> int:
         if not nums:
             return 0
@@ -100,6 +106,7 @@ class Solution:
             return start
         return end
 
+    # https://leetcode.com/problems/length-of-last-word/
     def lengthOfLastWord(self, s: str) -> int:
         if not s:
             return 0
@@ -114,6 +121,7 @@ class Solution:
         
         return last - i
 
+    # https://leetcode.com/problems/spiral-matrix-ii/
     def generateMatrix(self, n: int) -> List[List[int]]:
         if n <= 0:
             return []
@@ -133,6 +141,7 @@ class Solution:
         
         return matrix
 
+    # https://leetcode.com/problems/rotate-list/
     def rotateRight(self, head: ListNode, k: int) -> ListNode:
         if k == 0 or not head:
             return head
@@ -155,6 +164,7 @@ class Solution:
         ans, q.next, p.next = q.next, None, head
         return ans
 
+    # https://leetcode.com/problems/minimum-path-sum
     def minPathSum(self, grid: List[List[int]]) -> int:
         if not grid or len(grid) == 0 or not grid[0] or len(grid[0]) == 0:
             return 0
@@ -173,6 +183,7 @@ class Solution:
         
         return grid[-1][-1]
 
+    # https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/
     def removeDuplicates(self, nums: List[int]) -> int:
         if not nums or len(nums) == 0:
             return 0
@@ -184,6 +195,7 @@ class Solution:
                 n += 1
         return n
 
+    # https://leetcode.com/problems/text-justification/
     def fullJustify(self, words: List[str], maxWidth: int) -> List[str]:
         ans, n, start, i = [], len(words), 0, 0
         
@@ -212,6 +224,7 @@ class Solution:
             start = i
         return ans
 
+    # https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/
     def deleteDuplicates(self, head: ListNode) -> ListNode:
         dummy = ListNode(-1)
         prev = dummy
@@ -223,3 +236,12 @@ class Solution:
             head = head.next
         prev.next = None
         return dummy.next
+
+    # https://leetcode.com/problems/remove-duplicates-from-sorted-list/submissions/
+    def deleteDuplicates(self, head: ListNode) -> ListNode:
+        p = head
+        while p:
+            while p.next and p.next.val == p.val:
+                p.next = p.next.next
+            p = p.next
+        return head
