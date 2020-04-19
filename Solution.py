@@ -211,3 +211,15 @@ class Solution:
             ans.append(temp)
             start = i
         return ans
+
+    def deleteDuplicates(self, head: ListNode) -> ListNode:
+        dummy = ListNode(-1)
+        prev = dummy
+        while head:
+            if not head.next or head.next.val > head.val:
+                prev.next, prev = head, head
+            while head.next and head.next.val == head.val:
+                head = head.next
+            head = head.next
+        prev.next = None
+        return dummy.next
