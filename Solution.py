@@ -183,3 +183,31 @@ class Solution:
                 nums[n] = num
                 n += 1
         return n
+
+    def fullJustify(self, words: List[str], maxWidth: int) -> List[str]:
+        ans, n, start, i = [], len(words), 0, 0
+        
+        while i < n:
+            count = 0
+            while i < n and count + len(words[i]) + i - start <= maxWidth:
+                count += len(words[i])
+                i += 1
+            
+            total = maxWidth - count
+            spaces = 1 if i == n or start + 1 == i else total // (i - 1 - start)
+            total = 0 if i == n else total - (i - 1 - start) * spaces
+            
+            line = [words[start]]
+            for j in range(start + 1, i):
+                if total > 0:
+                    line.append(' ' * (spaces + 1))
+                    total -= 1
+                else:
+                    line.append(' ' * spaces)
+                line.append(words[j])
+            
+            temp = ''.join(line)
+            temp += ' ' * (maxWidth - len(temp))
+            ans.append(temp)
+            start = i
+        return ans
