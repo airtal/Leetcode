@@ -245,3 +245,17 @@ class Solution:
                 p.next = p.next.next
             p = p.next
         return head
+
+    # https://leetcode.com/problems/partition-list/
+    def partition(self, head: ListNode, x: int) -> ListNode:
+        left = prevLeft = ListNode(-1)
+        right = prevRight = ListNode(-1)
+        while head:
+            if head.val < x:
+                prevLeft.next, prevLeft = head, head
+            else:
+                prevRight.next, prevRight = head, head
+            head = head.next
+        prevRight.next = None
+        prevLeft.next = right.next
+        return left.next
