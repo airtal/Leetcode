@@ -275,3 +275,10 @@ class Solution:
                self.isScramble(s1[:i], s2[len(s1)-i:]) and self.isScramble(s1[i:], s2[:len(s1)-i]):
                 return True
         return False
+
+    # https://leetcode.com/problems/gray-code/
+    def grayCode(self, n: int) -> List[int]:
+        result = [0]
+        for i in range(n):
+            result += [x + (1 << i) for x in reversed(result)]
+        return result
