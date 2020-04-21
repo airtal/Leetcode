@@ -263,19 +263,12 @@ class Solution:
     # https://leetcode.com/problems/scramble-string/
     @lru_cache(None)
     def isScramble(self, s1: str, s2: str) -> bool:
-        if not s1 and not s2:
-            return True
-        if not s1 or not s2 or len(s1) != len(s2):
+        if len(s1) != len(s2):
             return False
         if s1 == s2:
             return True
-        
-        count = {i : s1.count(i) for i in set(s1)}
-        for i in s2:
-            count[i] = count.get(i, 0) - 1
-        for key in count:
-            if count[key] != 0:
-                return False
+        if sorted(s1) != sorted(s2):
+            return False
         
         for i in range(1, len(s1)):
             if self.isScramble(s1[:i], s2[:i]) and self.isScramble(s1[i:], s2[i:]) or \
