@@ -282,3 +282,20 @@ class Solution:
         for i in range(n):
             result += [x + (1 << i) for x in reversed(result)]
         return result
+
+    # https://leetcode.com/problems/unique-binary-search-trees-ii/
+    def generateTrees(self, n: int) -> List[TreeNode]:
+        if n < 1:
+            return []
+        
+        @lru_cache(None)
+        def generate(first, last):
+            result = []
+            for root in range(first, last + 1):
+                for left in generate(first, root - 1):
+                    for right in generate(root + 1, last):
+                        node = TreeNode(root)
+                        node.left, node.right = left, right
+                        result.append(node)
+            return result or [None]
+        return generate(1, n)
