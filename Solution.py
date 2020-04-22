@@ -376,3 +376,14 @@ class Solution:
                 if s[i] == t[j]:
                     f[j + 1] += f[j]
         return f[n2]
+
+    # https://leetcode.com/problems/pascals-triangle-ii/
+    def getRow(self, rowIndex: int) -> List[int]:
+        row = [1]
+        for i in range(rowIndex):
+            temp = [1]
+            for j in range(i):
+                temp.append(row[j] + row[j + 1])
+            temp.append(1)
+            row = temp
+        return row
