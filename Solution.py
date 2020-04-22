@@ -320,3 +320,20 @@ class Solution:
         if p and q:
             return p.val == q.val and self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
         return p is q
+
+    # https://leetcode.com/problems/recover-binary-search-tree/
+    def recoverTree(self, root: TreeNode) -> None:
+        first, second, prev, curr = None, None, TreeNode(float('-inf')), root
+        while curr:
+            if curr.left:
+                temp = curr.left
+                while temp.right and temp.right != curr: temp = temp.right
+                if not temp.right:
+                    temp.right, curr = curr, curr.left
+                    continue
+                temp.right = None
+            if prev.val > curr.val:
+                if not first: first = prev
+                second = curr
+            prev, curr = curr, curr.right
+        first.val, second.val = second.val, first.val
