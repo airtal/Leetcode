@@ -387,3 +387,20 @@ class Solution:
             temp.append(1)
             row = temp
         return row
+
+    # https://leetcode.com/problems/triangle/
+    def minimumTotal(self, triangle: List[List[int]]) -> int:
+        if not triangle:
+            return float('inf')
+        last, n = triangle[0], len(triangle)
+        for i in range(1, n):
+            triangle[i][0] += last[0]
+            for j in range(1, i):
+                triangle[i][j] += min(last[j - 1], last[j])
+            triangle[i][i] += last[i - 1]
+            last = triangle[i]
+        
+        ans = float('inf')
+        for i in range(n):
+            ans = min(ans, triangle[n - 1][i])
+        return ans
