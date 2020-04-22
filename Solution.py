@@ -346,3 +346,19 @@ class Solution:
             ans += dict.get(sum - k, 0)
             dict[sum] = dict.get(sum, 0) + 1
         return ans
+
+    # https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/
+    def buildTree(self, inorder: List[int], postorder: List[int]) -> TreeNode:
+        if not inorder or not postorder or len(inorder) != len(postorder):
+            return None
+        dict = {}
+        for i in range(len(inorder)):
+            dict[inorder[i]] = i
+        
+        def helper(inorder, postorder, dict, iStart, iEnd, pStart, pEnd):
+            if iStart > iEnd or pStart > pEnd: return None
+            node, index = TreeNode(postorder[pEnd]), dict[postorder[pEnd]]
+            count = index - iStart
+            node.left, node.right = helper(inorder, postorder, dict, iStart, index - 1, pStart, pStart + count - 1), helper(inorder, postorder, dict, index + 1, iEnd, pStart + count, pEnd - 1)
+            return node
+        return helper(inorder, postorder, dict, 0, len(inorder) - 1, 0, len(postorder) - 1)
