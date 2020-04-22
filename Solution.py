@@ -337,3 +337,12 @@ class Solution:
                 second = curr
             prev, curr = curr, curr.right
         first.val, second.val = second.val, first.val
+
+    # https://leetcode.com/problems/subarray-sum-equals-k/
+    def subarraySum(self, nums: List[int], k: int) -> int:
+        dict, sum, ans = {0 : 1}, 0, 0
+        for num in nums:
+            sum += num
+            ans += dict.get(sum - k, 0)
+            dict[sum] = dict.get(sum, 0) + 1
+        return ans
