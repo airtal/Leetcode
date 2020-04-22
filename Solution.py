@@ -362,3 +362,17 @@ class Solution:
             node.left, node.right = helper(inorder, postorder, dict, iStart, index - 1, pStart, pStart + count - 1), helper(inorder, postorder, dict, index + 1, iEnd, pStart + count, pEnd - 1)
             return node
         return helper(inorder, postorder, dict, 0, len(inorder) - 1, 0, len(postorder) - 1)
+
+    # https://leetcode.com/problems/distinct-subsequences/
+    @lru_cache(None)
+    def numDistinct(self, s: str, t: str) -> int:
+        if len(s) < len(t):
+            return 0
+        n1, n2 = len(s), len(t)
+        f = [1] + [0] * n2
+        for i in range(n1):
+            upper = min(i, n2 - 1)
+            for j in range(upper, -1, -1):
+                if s[i] == t[j]:
+                    f[j + 1] += f[j]
+        return f[n2]
