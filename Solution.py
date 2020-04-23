@@ -404,3 +404,12 @@ class Solution:
         for i in range(n):
             ans = min(ans, triangle[n - 1][i])
         return ans
+
+    # https://leetcode.com/problems/bitwise-and-of-numbers-range/
+    def rangeBitwiseAnd(self, m: int, n: int) -> int:
+        count = 0
+        while m != n:
+            m >>= 1
+            n >>= 1
+            count += 1
+        return m << count
