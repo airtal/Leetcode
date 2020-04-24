@@ -413,3 +413,22 @@ class Solution:
             n >>= 1
             count += 1
         return m << count
+
+    # https://leetcode.com/problems/palindrome-partitioning-ii/
+    def minCut(self, s: str) -> int:
+        if not s:
+            return 0
+        
+        n = len(s)
+        f = [x - 1 for x in range(n + 1)]
+        for mid in range(n):
+            start, end = mid, mid
+            while start >= 0 and end < n and s[start] == s[end]:
+                f[end + 1] = min(f[end + 1], f[start] + 1)
+                start, end = start - 1, end + 1
+                
+            start, end = mid, mid + 1
+            while start >= 0 and end < n and s[start] == s[end]:
+                f[end + 1] = min(f[end + 1], f[start] + 1)
+                start, end = start - 1, end + 1
+        return f[n]
