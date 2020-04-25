@@ -453,3 +453,16 @@ class Solution:
             if pre <= count:
                 ans += count - pre + 1
         return ans
+
+    # https://leetcode.com/problems/insertion-sort-list/
+    def insertionSortList(self, head: ListNode) -> ListNode:
+        dummy = pre = ListNode(-1)
+        while head:
+            if head.val < pre.val:
+                pre = dummy
+            p = pre.next
+            while p and p.val < head.val:
+                pre, p = p, p.next
+            p, head.next, pre.next, pre = head.next, pre.next, head, head
+            head = p
+        return dummy.next
