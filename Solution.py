@@ -466,3 +466,11 @@ class Solution:
             p, head.next, pre.next, pre = head.next, pre.next, head, head
             head = p
         return dummy.next
+
+    # https://leetcode.com/problems/jump-game
+    def canJump(self, nums: List[int]) -> bool:
+        curr, n, maxJump = 0, len(nums), 0
+        while curr <= maxJump and maxJump < n - 1:
+            maxJump = max(maxJump, curr + nums[curr])
+            curr += 1
+        return maxJump >= n - 1
