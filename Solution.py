@@ -432,3 +432,24 @@ class Solution:
                 f[end + 1] = min(f[end + 1], f[start] + 1)
                 start, end = start - 1, end + 1
         return f[n]
+
+    # https://leetcode.com/problems/candy/
+    def candy(self, ratings: List[int]) -> int:
+        n = len(ratings)
+        ans, count, pre = 1, 0, 1
+        for i in range(1, n):
+            if ratings[i] >= ratings[i - 1]: # non-descending case
+                if count > 0: # position (i - 1) is turning point for \/
+                    ans += (count + 1) * count // 2 # total (count + 1) in descending slope, add sum(1,2,..,count) 
+                    if pre <= count: # pre is turning point for /\
+                        ans += count - pre + 1 # add candy to ensure turing point is max in both / and \
+                    count, pre = 0, 1
+                pre = 1 if ratings[i] == ratings[i - 1] else pre + 1 # give 1 candy when having the same rating
+                ans += pre # add candy for position i (second in increasing slope)
+            else:
+                count += 1 # one more in descending slope
+        if count > 0:
+            ans += (count + 1) * count // 2
+            if pre <= count:
+                ans += count - pre + 1
+        return ans
