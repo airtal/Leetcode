@@ -474,3 +474,13 @@ class Solution:
             maxJump = max(maxJump, curr + nums[curr])
             curr += 1
         return maxJump >= n - 1
+
+    # https://leetcode.com/problems/diagonal-traverse-ii/
+    def findDiagonalOrder(self, nums: List[List[int]]) -> List[int]:
+        ans = []
+        for i, row in enumerate(nums):
+            for j, num in enumerate(row):
+                if len(ans) <= i + j:
+                    ans.append([])
+                ans[i + j].append(num)
+        return [x for row in ans for x in reversed(row)]
