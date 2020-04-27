@@ -496,3 +496,26 @@ class Solution:
                 else:
                     f[i + 1][j + 1] = max(f[i + 1][j], f[i][j + 1])
         return f[n1][n2]    
+
+    # https://leetcode.com/problems/maximum-gap/
+    def maximumGap(self, nums: List[int]) -> int:
+        n = len(nums)
+        if n < 2: return 0
+        
+        a, b = min(nums), max(nums)
+        if a == b: return 0
+        
+        diff = ceil((b - a) / (n - 1))
+        buckets = [[a, a]] + [[1 << 32, -1] for _ in range(n - 3)] + [[b, b]]
+        for x in nums:
+            if x == a or x == b:
+                continue
+            bucket = buckets[(x - a) // diff]
+            bucket[0], bucket[1] = min(bucket[0], x), max(bucket[1], x)
+        
+        ans, prev = diff, buckets[0][1]
+        for i in range(1, n - 1):
+            if buckets[i][0] < 1 << 32:
+                ans = max(ans, buckets[i][0] - prev)
+                prev = buckets[i][1]
+        return ans
