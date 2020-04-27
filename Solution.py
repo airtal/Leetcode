@@ -541,3 +541,8 @@ class Solution:
                     f[i][j] = min(f[i - 1][j], f[i][j - 1], f[i - 1][j - 1]) + 1
                     ans = max(ans, f[i][j])
         return ans * ans
+
+    # https://leetcode.com/problems/excel-sheet-column-title/
+    def convertToTitle(self, n: int) -> str:
+        # 26-nary, ((x[0]*26 + x[1])*26 + x[2])*26 + ...
+        return self.convertToTitle((n - 1) // 26) + chr((n - 1) % 26 + ord('A')) if n > 0 else ''
