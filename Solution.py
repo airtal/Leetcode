@@ -519,3 +519,25 @@ class Solution:
                 ans = max(ans, buckets[i][0] - prev)
                 prev = buckets[i][1]
         return ans
+
+    # https://leetcode.com/problems/maximal-square
+    def maximalSquare(self, matrix: List[List[str]]) -> int:
+        if not matrix:
+            return 0
+        m, n, ans = len(matrix), len(matrix[0]), 0
+        f = [[0] * n for _ in range(m)]
+        for i in range(n):
+            if matrix[0][i] == '1':
+                f[0][i] = 1
+                ans = 1
+        for i in range(1, m):
+            if matrix[i][0] == '1':
+                f[i][0] = 1
+                ans = 1
+        
+        for i in range(1, m):
+            for j in range(1, n):
+                if matrix[i][j] == '1':
+                    f[i][j] = min(f[i - 1][j], f[i][j - 1], f[i - 1][j - 1]) + 1
+                    ans = max(ans, f[i][j])
+        return ans * ans
