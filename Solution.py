@@ -546,3 +546,14 @@ class Solution:
     def convertToTitle(self, n: int) -> str:
         # 26-nary, ((x[0]*26 + x[1])*26 + x[2])*26 + ...
         return self.convertToTitle((n - 1) // 26) + chr((n - 1) % 26 + ord('A')) if n > 0 else ''
+
+    # https://leetcode.com/problems/compare-version-numbers/
+    def compareVersion(self, version1: str, version2: str) -> int:
+        def getLevels(s):
+            s = list(map(int, s.split('.')))
+            i = len(s) - 1
+            while i >= 0 and s[i] == 0:
+                i -= 1
+            return s[:i+1]
+        levels1, levels2 = getLevels(version1), getLevels(version2)
+        return 1 if levels1 > levels2 else (-1 if levels1 < levels2 else 0)
