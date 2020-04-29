@@ -575,3 +575,21 @@ class Solution:
         return max(merge(maxArray(nums1, i), maxArray(nums2, k - i))
                    for i in range(k + 1)
                    if i <= len(nums1) and k - i <= len(nums2))
+
+    # https://leetcode.com/problems/dungeon-game/
+    def calculateMinimumHP(self, dungeon: List[List[int]]) -> int:
+        if not dungeon:
+            return 1
+        m, n = len(dungeon), len(dungeon[0])
+        f = [[0] * n for _ in range(m)]
+        f[m - 1][n - 1] = max(1 - dungeon[m - 1][n - 1], 1)
+        
+        for i in range(n - 2, -1, -1):
+            f[m - 1][i] = max(f[m - 1][i + 1] - dungeon[m - 1][i], 1)
+        for i in range(m - 2, -1, -1):
+            f[i][n - 1] = max(f[i + 1][n - 1] - dungeon[i][n - 1], 1)
+            
+        for i in range(m - 2, -1, -1):
+            for j in range(n - 2, -1, -1):
+                f[i][j] = max(min(f[i + 1][j], f[i][j + 1]) - dungeon[i][j], 1)
+        return f[0][0]
