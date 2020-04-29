@@ -557,3 +557,21 @@ class Solution:
             return s[:i+1]
         levels1, levels2 = getLevels(version1), getLevels(version2)
         return 1 if levels1 > levels2 else (-1 if levels1 < levels2 else 0)
+
+    # https://leetcode.com/problems/create-maximum-number/
+    def maxNumber(self, nums1: List[int], nums2: List[int], k: int) -> List[int]:
+        def maxArray(nums, k):
+            n, stack = len(nums), []
+            for i, num in enumerate(nums):
+                while stack and stack[-1] < num and n - i + len(stack) > k:
+                    stack.pop(-1)
+                if len(stack) < k:
+                    stack.append(num)
+            return stack
+        
+        def merge(a, b):
+            return [max(a, b).pop(0) for _ in a + b]
+        
+        return max(merge(maxArray(nums1, i), maxArray(nums2, k - i))
+                   for i in range(k + 1)
+                   if i <= len(nums1) and k - i <= len(nums2))
