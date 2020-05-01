@@ -593,3 +593,14 @@ class Solution:
             for j in range(n - 2, -1, -1):
                 f[i][j] = max(min(f[i + 1][j], f[i][j + 1]) - dungeon[i][j], 1)
         return f[0][0]
+
+    # https://leetcode.com/problems/integer-break/
+    def integerBreak(self, n: int) -> int:
+        @lru_cache(None)
+        def helper(n, split):
+            if n == 1: return 1
+            ans = 1 if not split else n
+            for i in range(1, n // 2 + 1):
+                ans = max(ans, helper(i, True) * helper(n - i, True))
+            return ans
+        return helper(n, False)
