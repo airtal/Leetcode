@@ -604,3 +604,14 @@ class Solution:
                 ans = max(ans, helper(i, True) * helper(n - i, True))
             return ans
         return helper(n, False)
+
+    # https://leetcode.com/problems/jewels-and-stones/
+    def numJewelsInStones(self, J: str, S: str) -> int:
+        jewels, ans = set(), 0
+        for l in J:
+            if l not in jewels:
+                jewels.add(l)
+        for l in S:
+            if l in jewels:
+                ans += 1
+        return ans
