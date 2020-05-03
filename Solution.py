@@ -615,3 +615,14 @@ class Solution:
             if l in jewels:
                 ans += 1
         return ans
+
+    # https://leetcode.com/problems/ransom-note/
+    def canConstruct(self, ransomNote: str, magazine: str) -> bool:
+        count = {}
+        for l in magazine:
+            count[l] = count.get(l, 0) + 1
+        for l in ransomNote:
+            if count.get(l, 0) == 0:
+                return False
+            count[l] -= 1
+        return True
