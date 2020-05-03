@@ -636,3 +636,13 @@ class Solution:
             if path[0] not in out:
                 out.add(path[0])
         return (cities - out).pop()
+
+    # https://leetcode.com/problems/check-if-all-1s-are-at-least-length-k-places-away/
+    def kLengthApart(self, nums: List[int], k: int) -> bool:
+        last = -k - 1
+        for i, num in enumerate(nums):
+            if num == 1:
+                if i - last - 1 < k:
+                    return False
+                last = i
+        return True
