@@ -626,3 +626,13 @@ class Solution:
                 return False
             count[l] -= 1
         return True
+
+    # https://leetcode.com/problems/destination-city/
+    def destCity(self, paths: List[List[str]]) -> str:
+        cities, out = set(), set()
+        for path in paths:
+            cities.add(path[0])
+            cities.add(path[1])
+            if path[0] not in out:
+                out.add(path[0])
+        return (cities - out).pop()
