@@ -664,3 +664,10 @@ class Solution:
                     maxd.popleft()
                 start += 1
         return len(nums) - start
+
+    # https://leetcode.com/problems/number-complement/
+    def findComplement(self, num: int) -> int:
+        n = 1
+        while n < num:
+            n = (n << 1) | 1
+        return n - num
