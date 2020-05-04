@@ -646,3 +646,21 @@ class Solution:
                     return False
                 last = i
         return True
+    
+    # https://leetcode.com/problems/longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit/
+    def longestSubarray(self, nums: List[int], limit: int) -> int:
+        mind, maxd, start = collections.deque(), collections.deque(), 0
+        for i, a in enumerate(nums):
+            while len(mind) and a <= nums[mind[-1]]:
+                mind.pop()
+            while len(maxd) and a >= nums[maxd[-1]]:
+                maxd.pop()
+            mind.append(i)
+            maxd.append(i)
+            if nums[maxd[0]] - nums[mind[0]] > limit:
+                if mind[0] == start:
+                    mind.popleft()
+                if maxd[0] == start:
+                    maxd.popleft()
+                start += 1
+        return len(nums) - start
