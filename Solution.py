@@ -671,3 +671,12 @@ class Solution:
         while n < num:
             n = (n << 1) | 1
         return n - num
+
+    # https://leetcode.com/problems/first-unique-character-in-a-string/
+    def firstUniqChar(self, s: str) -> int:
+        count, start = {}, 0
+        for i, l in enumerate(s):
+            count[l] = count.get(l, 0) + 1
+            while start <= i and count[s[start]] > 1:
+                start += 1
+        return start if start < len(s) else -1
