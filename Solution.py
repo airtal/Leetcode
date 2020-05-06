@@ -680,3 +680,15 @@ class Solution:
             while start <= i and count[s[start]] > 1:
                 start += 1
         return start if start < len(s) else -1
+
+    # https://leetcode.com/problems/majority-element
+    def majorityElement(self, nums: List[int]) -> int:
+        ans, cnt = -1, 0
+        for num in nums:
+            if cnt == 0:
+                ans, cnt = num, 1
+            elif num == ans:
+                cnt += 1
+            else:
+                cnt -= 1
+        return ans
