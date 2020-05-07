@@ -692,3 +692,25 @@ class Solution:
             else:
                 cnt -= 1
         return ans
+
+    # https://leetcode.com/problems/cousins-in-binary-tree/
+    def isCousins(self, root: TreeNode, x: int, y: int) -> bool:
+        if not root or x == root.val or y == root.val: return False
+        q = deque([root])
+        while q:
+            valSet, nextq = set(), deque()
+            for node in q:
+                if node.left:
+                    nextq.append(node.left)
+                    valSet.add(node.left.val)
+                if node.right:
+                    nextq.append(node.right)
+                    valSet.add(node.right.val)
+                if node.left and node.right:
+                    if nextq[-1].val == x and nextq[-2].val == y or \
+                       nextq[-1].val == y and nextq[-2].val == x:
+                        return False
+            if x in valSet and y in valSet:
+                return True
+            q = nextq
+        return False
