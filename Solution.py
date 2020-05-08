@@ -714,3 +714,11 @@ class Solution:
                 return True
             q = nextq
         return False
+
+    # https://leetcode.com/problems/check-if-it-is-a-straight-line/
+    def checkStraightLine(self, coordinates: List[List[int]]) -> bool:
+        x, y = coordinates[0][0], coordinates[0][1]
+        deltaX, deltaY = coordinates[1][0] - x, coordinates[1][1] - y
+        for i in range(2, len(coordinates)):
+            if (coordinates[i][1] - y) * deltaX != (coordinates[i][0] - x) * deltaY: return False
+        return True
