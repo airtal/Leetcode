@@ -722,3 +722,16 @@ class Solution:
         for i in range(2, len(coordinates)):
             if (coordinates[i][1] - y) * deltaX != (coordinates[i][0] - x) * deltaY: return False
         return True
+
+    # https://leetcode.com/problems/valid-perfect-square/
+    def isPerfectSquare(self, num: int) -> bool:
+        start, end = 1, num
+        while start + 1 < end:
+            mid = start + (end - start) // 2
+            if mid ** 2 > num:
+                end = mid
+            else:
+                start = mid
+        if start ** 2 == num or end ** 2 == num:
+            return True
+        return False
