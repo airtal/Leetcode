@@ -735,3 +735,15 @@ class Solution:
         if start ** 2 == num or end ** 2 == num:
             return True
         return False
+
+    # https://leetcode.com/problems/find-the-town-judge/
+    def findJudge(self, N: int, trust: List[List[int]]) -> int:
+        degree = [0] * (N + 1)
+        for p1, p2 in trust:
+            degree[p2] += 1
+            degree[p1] -= 1
+        
+        for i in range(1, N + 1):
+            if degree[i] == N - 1:
+                return i
+        return -1
