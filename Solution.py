@@ -823,3 +823,23 @@ class Solution:
                         ans += cnt + 1
             return ans
         return helper(-1, 0) * 2
+
+    # https://leetcode.com/problems/single-element-in-a-sorted-array
+    def singleNonDuplicate(self, nums: List[int]) -> int:
+        start, end = 0, len(nums) - 1
+        while start + 1 < end:
+            mid = start + (end - start) // 2
+            cnt = mid - start + 1
+            if cnt % 2 == 0:
+                if nums[mid] == nums[mid + 1]:
+                    end = mid - 1
+                else:
+                    start = mid + 1
+            else:
+                if nums[mid] == nums[mid + 1]:
+                    start = mid
+                else:
+                    end = mid
+        if start == 0 or nums[start] != nums[start - 1]:
+            return nums[start]
+        return nums[end]
