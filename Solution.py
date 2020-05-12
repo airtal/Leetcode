@@ -761,3 +761,13 @@ class Solution:
                 helper(x, y)
         helper(sr, sc)
         return image
+
+    # https://leetcode.com/problems/build-an-array-with-stack-operations/
+    def buildArray(self, target: List[int], n: int) -> List[str]:
+        ans, prev = [], 0
+        if not target: return ans
+        
+        for curr in target:
+            ans += ['Push', 'Pop'] * (curr - prev - 1) + ['Push']
+            prev = curr
+        return ans
