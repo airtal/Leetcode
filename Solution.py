@@ -771,3 +771,29 @@ class Solution:
             ans += ['Push', 'Pop'] * (curr - prev - 1) + ['Push']
             prev = curr
         return ans
+
+    # https://leetcode.com/problems/count-triplets-that-can-form-two-arrays-of-equal-xor/
+    def ways(self, pizza: List[str], k: int) -> int:
+        m, n = len(pizza), len(pizza[0])
+        f = [[0] * (n + 1) for _ in range(m + 1)]
+        for i in range(m):
+            for j in range(n):
+                f[i + 1][j + 1] = f[i + 1][j] + f[i][j + 1] - f[i][j]
+                if pizza[i][j] == 'A':
+                    f[i + 1][j + 1] += 1
+        
+        @lru_cache(None)
+        def helper(r1, r2, c1, c2, k):
+            #print(r1, r2, c1, c2, k)
+            if k == 1: return 1
+            ans, cnt = 0, f[r2][c2] - f[r2][c1] - f[r1][c2] + f[r1][c1]
+            for i in range(r1 + 1, r2):
+                up = f[i][c2] - f[i][c1] - f[r1][c2] + f[r1][c1]
+                if up > 0 and cnt - up > 0:
+                    ans = (ans + helper(i, r2, c1, c2, k - 1)) % 1000000007
+            for i in range(c1 + 1, c2):
+                left = f[r2][i] - f[r2][c1] - f[r1][i] + f[r1][c1]
+                if left > 0 and cnt - left > 0:
+                    ans = (ans + helper(r1, r2, i, c2, k - 1)) % 1000000007
+            return ans
+        return helper(0, m, 0, n, k)
