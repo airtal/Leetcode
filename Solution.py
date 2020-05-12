@@ -797,3 +797,29 @@ class Solution:
                     ans = (ans + helper(r1, r2, i, c2, k - 1)) % 1000000007
             return ans
         return helper(0, m, 0, n, k)
+
+    # https://leetcode.com/problems/minimum-time-to-collect-all-apples-in-a-tree/
+    def minTime(self, n: int, edges: List[List[int]], hasApple: List[bool]) -> int:
+        app = set()
+        for i in range(n):
+            if hasApple[i]:
+                app.add(i)
+        
+        adjList = {}
+        for u, v in edges:
+            e = adjList.get(u, [])
+            e.append(v)
+            adjList[u] = e
+            e = adjList.get(v, [])
+            e.append(u)
+            adjList[v] = e
+        
+        def helper(parent, curr):
+            ans = 0
+            for v in adjList[curr]:
+                if v != parent:
+                    cnt = helper(curr, v)
+                    if cnt > 0 or v in app:
+                        ans += cnt + 1
+            return ans
+        return helper(-1, 0) * 2
