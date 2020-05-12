@@ -747,3 +747,17 @@ class Solution:
             if degree[i] == N - 1:
                 return i
         return -1
+
+    # https://leetcode.com/problems/flood-fill
+    def floodFill(self, image: List[List[int]], sr: int, sc: int, newColor: int) -> List[List[int]]:
+        if image[sr][sc] == newColor: return image
+        m, n = len(image), len(image[0])
+        
+        def helper(r, c):
+            color, image[r][c] = image[r][c], newColor
+            for dx, dy in [[0,1], [1,0], [0,-1], [-1,0]]:
+                x, y = r + dx, c + dy
+                if x < 0 or x >= m or y < 0 or y >= n or image[x][y] != color: continue
+                helper(x, y)
+        helper(sr, sc)
+        return image
