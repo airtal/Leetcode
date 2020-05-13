@@ -855,3 +855,17 @@ class Solution:
             ans += i * n - total
             count[curr] = [n + 1, total + i + 1]
         return ans
+
+    # https://leetcode.com/problems/remove-k-digits/
+    def removeKdigits(self, num: str, k: int) -> str:
+        stack = []
+        for d in num:
+            while stack and k and d < stack[-1]:
+                k -= 1
+                stack.pop()
+            stack.append(d)
+            
+        while stack and k:
+            stack.pop()
+            k -= 1
+        return ''.join(stack).lstrip('0') or '0'
