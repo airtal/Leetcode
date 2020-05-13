@@ -843,3 +843,15 @@ class Solution:
         if start == 0 or nums[start] != nums[start - 1]:
             return nums[start]
         return nums[end]
+
+    # https://leetcode.com/problems/count-triplets-that-can-form-two-arrays-of-equal-xor/
+    def countTriplets(self, arr: List[int]) -> int:
+        ans, curr = 0, 0
+        count = {0 : [1, 0]}
+        for i, num in enumerate(arr):
+            curr ^= num
+            n, total = count.get(curr, [0, 0])
+            # preXor[n] indicates first n elements, preXOR[k+1] == preXOR[i], j in range(i + 1, k)
+            ans += i * n - total
+            count[curr] = [n + 1, total + i + 1]
+        return ans
