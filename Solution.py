@@ -903,3 +903,14 @@ class Solution:
                 return False
             node = node.children[l]
         return True
+
+    # https://leetcode.com/problems/maximum-sum-circular-subarray/
+    def maxSubarraySumCircular(self, A: List[int]) -> int:
+        minAns, maxAns, minSum, maxSum, curr = 0, -float('inf'), 0, -float('inf'), 0
+        for a in A:
+            curr += a
+            maxAns = max(maxAns, curr - minSum)
+            minAns = min(minAns, curr - maxSum)
+            minSum = min(minSum, curr)
+            maxSum = max(maxSum, curr)
+        return max(maxAns, curr - minAns)
