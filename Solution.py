@@ -914,3 +914,18 @@ class Solution:
             minSum = min(minSum, curr)
             maxSum = max(maxSum, curr)
         return max(maxAns, curr - minAns)
+
+    # https://leetcode.com/problems/odd-even-linked-list
+    def oddEvenList(self, head: ListNode) -> ListNode:
+        odd, even, l = ListNode(), ListNode(), 1
+        oddPrev, evenPrev = odd, even
+        while head:
+            if l % 2 == 1:
+                oddPrev.next = head
+                oddPrev = head
+            else:
+                evenPrev.next = head
+                evenPrev = head
+            head, l = head.next, l + 1
+        oddPrev.next, evenPrev.next = even.next, None
+        return odd.next
