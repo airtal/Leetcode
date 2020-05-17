@@ -929,3 +929,22 @@ class Solution:
             head, l = head.next, l + 1
         oddPrev.next, evenPrev.next = even.next, None
         return odd.next
+
+    # https://leetcode.com/problems/find-all-anagrams-in-a-string/
+    def findAnagrams(self, s: str, p: str) -> List[int]:
+        freq, temp = {}, {}
+        for ch in p:
+            freq[ch] = freq.get(ch, 0) + 1
+        
+        ans, n, start = [], len(p), 0
+        for i, ch in enumerate(s):
+            temp[ch] = temp.get(ch, 0) + 1
+            if i >= n - 1:
+                if temp == freq:
+                    ans += [start]
+                if temp[s[start]] == 1:
+                    temp.pop(s[start])
+                else:
+                    temp[s[start]] -= 1
+                start += 1
+        return ans
