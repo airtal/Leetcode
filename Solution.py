@@ -978,3 +978,26 @@ class Solution:
     def arrangeWords(self, text: str) -> str:
         words = text.lower().split(' ')
         return ' '.join(sorted(words, key=len)).capitalize()
+
+    # https://leetcode.com/problems/people-whose-list-of-favorite-companies-is-not-a-subset-of-another-list/
+    def peopleIndexes(self, favoriteCompanies: List[List[str]]) -> List[int]:
+        index, n, compSets = {}, 0, []
+        for i, p in enumerate(favoriteCompanies):
+            compSets.append((i, set()))
+            for c in p:
+                if c not in index:
+                    index[c], n = n, n + 1
+                compSets[i][1].add(index[c])
+        compSets.sort(key = lambda x : len(x[1]), reverse=True)
+        ans = []
+        for i in range(len(compSets)):
+            found = False
+            for j in range(i):
+                if len(compSets[j][1]) == len(compSets[i][1]):
+                    break
+                if compSets[i][1].issubset(compSets[j][1]):
+                    found = True
+                    break
+            if not found:
+                ans.append(compSets[i][0])
+        return sorted(ans)
