@@ -965,3 +965,16 @@ class Solution:
                 else:
                     temp[head] -= 1
         return False
+
+    # https://leetcode.com/problems/number-of-students-doing-homework-at-a-given-time/
+    def busyStudent(self, startTime: List[int], endTime: List[int], queryTime: int) -> int:
+        ans = 0
+        for i in range(len(startTime)):
+            if queryTime >= startTime[i] and queryTime <= endTime[i]:
+                ans += 1
+        return ans
+    
+    # https://leetcode.com/problems/rearrange-words-in-a-sentence/
+    def arrangeWords(self, text: str) -> str:
+        words = text.lower().split(' ')
+        return ' '.join(sorted(words, key=len)).capitalize()
