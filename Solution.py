@@ -948,3 +948,20 @@ class Solution:
                     temp[s[start]] -= 1
                 start += 1
         return ans
+
+    # https://leetcode.com/problems/permutation-in-string
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        freq, temp, n = {}, {}, len(s1)
+        for ch in s1:
+            freq[ch] = freq.get(ch, 0) + 1
+        for i, ch in enumerate(s2):
+            temp[ch] = temp.get(ch, 0) + 1
+            if temp == freq:
+                return True
+            if i >= n - 1:
+                head = s2[i - n + 1]
+                if temp[head] == 1:
+                    temp.pop(head)
+                else:
+                    temp[head] -= 1
+        return False
