@@ -1001,3 +1001,15 @@ class Solution:
             if not found:
                 ans.append(compSets[i][0])
         return sorted(ans)
+
+    # https://leetcode.com/problems/maximum-number-of-darts-inside-of-a-circular-dartboard/
+    def numPoints(self, points: List[List[int]], r: int) -> int:
+        ans, n = 1, len(points)
+        for (x1, y1), (x2, y2) in itertools.combinations(points, 2):
+            d = ((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5
+            if d > r * 2: continue
+            q = (r * r - d * d / 4) ** 0.5
+            x0 = (x1 + x2) / 2.0 + (y1 - y2) / d * q
+            y0 = (y1 + y2) / 2.0 - (x1 - x2) / d * q
+            ans = max(ans, sum((x0 - x) ** 2 + (y0 - y) ** 2 <= r * r + 0.00001 for x, y in points))
+        return ans
