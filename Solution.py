@@ -871,12 +871,12 @@ class Solution:
         return ''.join(stack).lstrip('0') or '0'
 
     # https://leetcode.com/problems/implement-trie-prefix-tree/
-    class TrieNode:
+class TrieNode:
     def __init__(self):
         self.isWord = False
         self.children = {}
             
-    class Trie:
+class Trie:
     def __init__(self):
         self.root = TrieNode()
 
@@ -1012,4 +1012,17 @@ class Solution:
             x0 = (x1 + x2) / 2.0 + (y1 - y2) / d * q
             y0 = (y1 + y2) / 2.0 - (x1 - x2) / d * q
             ans = max(ans, sum((x0 - x) ** 2 + (y0 - y) ** 2 <= r * r + 0.00001 for x, y in points))
+        return ans
+
+    # https://leetcode.com/problems/online-stock-span
+class StockSpanner:
+    def __init__(self):
+        self.stack = []
+        self.day = -1
+    def next(self, price: int) -> int:
+        self.day += 1
+        while self.stack and price >= self.stack[-1][1]:
+            self.stack.pop()
+        ans = self.day - self.stack[-1][0] if self.stack else self.day + 1
+        self.stack.append((self.day, price))
         return ans
