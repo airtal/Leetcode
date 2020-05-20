@@ -1026,3 +1026,17 @@ class StockSpanner:
         ans = self.day - self.stack[-1][0] if self.stack else self.day + 1
         self.stack.append((self.day, price))
         return ans
+
+    # https://leetcode.com/problems/kth-smallest-element-in-a-bst
+    def kthSmallest(self, root: TreeNode, k: int) -> int:
+        self.k = k
+        def helper(root):
+            if not root: return None
+            res = helper(root.left)
+            if res: return res
+            if self.k == 1: return root
+            self.k -= 1
+            res = helper(root.right)
+            if res: return res
+            return None
+        return helper(root).val
