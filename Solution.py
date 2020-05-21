@@ -1040,3 +1040,13 @@ class StockSpanner:
             if res: return res
             return None
         return helper(root).val
+
+    # https://leetcode.com/problems/count-square-submatrices-with-all-ones
+    def countSquares(self, matrix: List[List[int]]) -> int:
+        ans = sum(matrix[0]) + sum(matrix[i][0] for i in range(1, len(matrix)))
+        for i in range(1, len(matrix)):
+            for j in range(1, len(matrix[0])):
+                if matrix[i][j]:
+                    matrix[i][j] = min(matrix[i - 1][j], matrix [i][j - 1], matrix[i - 1][j - 1]) + 1
+                ans += matrix[i][j]
+        return ans
