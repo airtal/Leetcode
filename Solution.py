@@ -1050,3 +1050,12 @@ class StockSpanner:
                     matrix[i][j] = min(matrix[i - 1][j], matrix [i][j - 1], matrix[i - 1][j - 1]) + 1
                 ans += matrix[i][j]
         return ans
+
+    # https://leetcode.com/problems/sort-characters-by-frequency
+    def frequencySort(self, s: str) -> str:
+        freq, ans = {}, ''
+        for ch in s:
+            freq[ch] = freq.get(ch, 0) + 1
+        for ch in sorted(freq, key=freq.get, reverse=True):
+            ans += ch * freq.get(ch)
+        return ans    
