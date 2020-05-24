@@ -1059,3 +1059,14 @@ class StockSpanner:
         for ch in sorted(freq, key=freq.get, reverse=True):
             ans += ch * freq.get(ch)
         return ans    
+
+    # https://leetcode.com/problems/interval-list-intersections/
+    def intervalIntersection(self, A: List[List[int]], B: List[List[int]]) -> List[List[int]]:
+        if not A or not B: return []
+        i, j, m, n, ans = 0, 0, len(A), len(B), []
+        while i < m and j < n:
+            l, r = max(A[i][0], B[j][0]), min(A[i][1], B[j][1])
+            if l <= r: ans.append([l, r])
+            if A[i][1] < B[j][1]: i += 1
+            else: j += 1
+        return ans
