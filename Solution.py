@@ -1070,3 +1070,11 @@ class StockSpanner:
             if A[i][1] < B[j][1]: i += 1
             else: j += 1
         return ans
+
+    # https://leetcode.com/problems/check-if-a-word-occurs-as-a-prefix-of-any-word-in-a-sentence/
+    def isPrefixOfWord(self, sentence: str, searchWord: str) -> int:
+        tokens = sentence.split(' ')
+        print(tokens)
+        for i, token in enumerate(tokens):
+            if token.startswith(searchWord): return i + 1
+        return -1
