@@ -1078,3 +1078,13 @@ class StockSpanner:
         for i, token in enumerate(tokens):
             if token.startswith(searchWord): return i + 1
         return -1
+
+    # https://leetcode.com/problems/construct-binary-search-tree-from-preorder-traversal
+    def bstFromPreorder(self, preorder: List[int]) -> TreeNode:
+        if not preorder: return None
+        root, i = TreeNode(preorder[0]), 1
+        while i < len(preorder) and preorder[i] < root.val:
+            i += 1
+        root.left = self.bstFromPreorder(preorder[1 : i])
+        root.right = self.bstFromPreorder(preorder[i :])
+        return root
