@@ -1088,3 +1088,16 @@ class StockSpanner:
         root.left = self.bstFromPreorder(preorder[1 : i])
         root.right = self.bstFromPreorder(preorder[i :])
         return root
+
+    # https://leetcode.com/problems/maximum-number-of-vowels-in-a-substring-of-given-length/
+    def maxVowels(self, s: str, k: int) -> int:
+        vowels = set('aeiou')
+        ans, cnt = 0, 0
+        for i, ch in enumerate(s):
+            if ch in vowels:
+                cnt += 1
+            if i >= k - 1:
+                ans = max(ans, cnt)
+                if s[i - k + 1] in vowels:
+                    cnt -= 1
+        return ans
