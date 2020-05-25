@@ -1101,3 +1101,25 @@ class StockSpanner:
                 if s[i - k + 1] in vowels:
                     cnt -= 1
         return ans
+
+    # https://leetcode.com/problems/pseudo-palindromic-paths-in-a-binary-tree/
+    def pseudoPalindromicPaths (self, root: TreeNode) -> int:
+        def helper(root, digits):
+            if not root: return 0
+            digits[root.val] = digits.get(root.val, 0) + 1
+            if not root.left and not root.right:
+                odd = 0
+                for digit in digits:
+                    if digits.get(digit) % 2 == 1:
+                        odd += 1
+                    if odd == 2:
+                        break
+                ans = 1 if odd < 2 else 0
+            else:
+                ans = helper(root.left, digits) + helper(root.right, digits)
+            if digits[root.val] == 1:
+                digits.pop(root.val)
+            else:
+                digits[root.val] -= 1
+            return ans
+        return helper(root, {})
