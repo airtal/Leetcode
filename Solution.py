@@ -1132,3 +1132,12 @@ class StockSpanner:
             for j in range(n):
                 f[i + 1][j + 1] = max(nums1[i] * nums2[j] + max(f[i][j], 0), f[i][j + 1], f[i + 1][j])
         return f[m][n]
+
+    # https://leetcode.com/problems/uncrossed-lines/
+    def maxUncrossedLines(self, A: List[int], B: List[int]) -> int:
+        m, n = len(A), len(B)
+        f = [[0] * (n + 1) for _ in range(m + 1)]
+        for i in range(m):
+            for j in range(n):
+                f[i + 1][j + 1] = max(f[i][j] + 1 if A[i] == B[j] else 0, f[i + 1][j], f[i][j + 1])
+        return f[m][n]
