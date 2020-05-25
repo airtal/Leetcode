@@ -1123,3 +1123,15 @@ class StockSpanner:
                 digits[root.val] -= 1
             return ans
         return helper(root, {})
+
+    # https://leetcode.com/problems/max-dot-product-of-two-subsequences/
+    def maxDotProduct(self, nums1: List[int], nums2: List[int]) -> int:
+        m, n = len(nums1), len(nums2)
+        f = [[0] * n for _ in range(m)]
+        for i in range(m):
+            for j in range(n):
+                f[i][j] = nums1[i] * nums2[j]
+                if i and j: f[i][j] += max(f[i - 1][j - 1], 0)
+                if i: f[i][j] = max(f[i][j], f[i - 1][j])
+                if j: f[i][j] = max(f[i][j], f[i][j - 1])
+        return f[m - 1][n - 1]
