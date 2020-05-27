@@ -1141,3 +1141,12 @@ class StockSpanner:
             for j in range(n):
                 f[i + 1][j + 1] = max(f[i][j] + 1 if A[i] == B[j] else 0, f[i + 1][j], f[i][j + 1])
         return f[m][n]
+
+    # https://leetcode.com/problems/contiguous-array
+    def findMaxLength(self, nums: List[int]) -> int:
+        index, delta, ans = {0: -1}, 0, 0
+        for i, num in enumerate(nums):
+            delta += 1 if num == 0 else -1
+            if delta not in index: index[delta] = i
+            else: ans = max(ans, i - index[delta])
+        return ans
