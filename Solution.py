@@ -1150,3 +1150,18 @@ class StockSpanner:
             if delta not in index: index[delta] = i
             else: ans = max(ans, i - index[delta])
         return ans
+
+    # https://leetcode.com/problems/possible-bipartition/
+    def possibleBipartition(self, N: int, dislikes: List[List[int]]) -> bool:
+        label, g = [0] * (N + 1), {}
+        for u, v in dislikes:
+            g[u], g[v] = g.get(u, []) + [v], g.get(v, []) + [u]
+        def helper(u, color):
+            label[u] = color
+            for v in g.get(u, []):
+                if label[v] == -color: continue
+                if label[v] == color or not helper(v, -color): return False
+            return True
+        for u in range(N):
+            if label[u] == 0 and not helper(u, 1): return False
+        return True
