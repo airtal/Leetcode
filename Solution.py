@@ -1165,3 +1165,12 @@ class StockSpanner:
         for u in range(N):
             if label[u] == 0 and not helper(u, 1): return False
         return True
+
+    # https://leetcode.com/problems/counting-bits
+    def countBits(self, num: int) -> List[int]:
+        if not num: return [0]
+        f, offset = [0, 1], 2
+        for i in range(2, num + 1):
+            f.append(f[i - offset] + 1)
+            if offset * 2 == i + 1: offset *= 2
+        return f
