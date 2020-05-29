@@ -1174,3 +1174,20 @@ class StockSpanner:
             f.append(f[i - offset] + 1)
             if offset * 2 == i + 1: offset *= 2
         return f
+
+    # https://leetcode.com/problems/course-schedule
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        g, indegree, ans = {}, defaultdict(lambda: 0), []
+        for u, v in prerequisites:
+            g[u] = g.get(u, []) + [v]
+            indegree[v] += 1
+        q = deque()
+        for u in range(numCourses):
+            if not indegree[u]: q.append(u)
+        while q:
+            u = q.pop()
+            ans += [u]
+            for v in g.get(u, []):
+                indegree[v] -= 1
+                if not indegree[v]: q.append(v)
+        return len(ans) == numCourses
