@@ -1191,3 +1191,7 @@ class StockSpanner:
                 indegree[v] -= 1
                 if not indegree[v]: q.append(v)
         return len(ans) == numCourses
+
+    # https://leetcode.com/problems/k-closest-points-to-origin/
+    def kClosest(self, points: List[List[int]], K: int) -> List[List[int]]:
+        return heapq.nsmallest(K, points, lambda x: x[0] ** 2 + x[1] ** 2)
