@@ -1195,3 +1195,15 @@ class StockSpanner:
     # https://leetcode.com/problems/k-closest-points-to-origin/
     def kClosest(self, points: List[List[int]], K: int) -> List[List[int]]:
         return heapq.nsmallest(K, points, lambda x: x[0] ** 2 + x[1] ** 2)
+
+    # https://leetcode.com/problems/edit-distance
+    def minDistance(self, word1: str, word2: str) -> int:
+        m, n = len(word1), len(word2)
+        f = [[x for x in range(n + 1)]] + [[x] + [0] * n for x in range(1, m + 1)]
+        for i in range(m):
+            for j in range(n):
+                if word1[i] == word2[j]:
+                    f[i + 1][j + 1] = min(f[i][j], min(f[i][j + 1], f[i + 1][j]) + 1)
+                else:
+                    f[i + 1][j + 1] = min(f[i][j], f[i][j + 1], f[i + 1][j]) + 1
+        return f[m][n]
