@@ -1222,3 +1222,22 @@ class Solution:
         root.left = self.invertTree(root.right)
         root.right = temp
         return root
+
+    # https://leetcode.com/submissions/detail/348210543/
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    def deleteNode(self, node):
+        """
+        :type node: ListNode
+        :rtype: void Do not return anything, modify node in-place instead.
+        """
+        prev = ListNode(-1)
+        prev.next = node
+        while node.next:
+            node.val, prev, node = node.next.val, node, node.next
+        prev.next = None
