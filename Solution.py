@@ -1241,3 +1241,15 @@ class Solution:
         while node.next:
             node.val, prev, node = node.next.val, node, node.next
         prev.next = None
+
+    # https://leetcode.com/problems/two-city-scheduling/
+    def twoCitySchedCost(self, costs: List[List[int]]) -> int:
+        n = len(costs) // 2
+        f = [[float('inf')] * (n + 1) for _ in range(2 * n + 1)]
+        f[0][0] = 0
+        for i in range(2 * n):
+            f[i + 1][0] = f[i][0] + costs[i][1]
+        for i in range(2 * n):
+            for j in range(min(i + 1, n)):
+                f[i + 1][j + 1] = min(f[i][j] + costs[i][0], f[i][j + 1] + costs[i][1])
+        return f[2 * n][n]
