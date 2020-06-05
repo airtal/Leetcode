@@ -1253,3 +1253,10 @@ class Solution:
             for j in range(min(i + 1, n)):
                 f[i + 1][j + 1] = min(f[i][j] + costs[i][0], f[i][j + 1] + costs[i][1])
         return f[2 * n][n]
+
+    # https://leetcode.com/problems/reverse-string
+    def reverseString(self, s: List[str]) -> None:
+        n = len(s)
+        for i in range(n // 2):
+            ch, s[i] = s[i], s[n - 1 - i]
+            s[n - 1 - i] = ch
