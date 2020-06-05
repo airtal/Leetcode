@@ -1260,3 +1260,14 @@ class Solution:
         for i in range(n // 2):
             ch, s[i] = s[i], s[n - 1 - i]
             s[n - 1 - i] = ch
+    
+    # https://leetcode.com/problems/random-pick-with-weight/
+class Solution:
+
+    def __init__(self, w: List[int]):
+        for i in range(1, len(w)): w[i] += w[i - 1]
+        self.w = w
+
+    def pickIndex(self) -> int:
+        target = random.randint(1, self.w[-1])
+        return bisect.bisect_left(self.w, target)
