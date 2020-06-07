@@ -1290,3 +1290,7 @@ class Solution:
     # https://leetcode.com/problems/make-two-arrays-equal-by-reversing-sub-arrays/
     def canBeEqual(self, target: List[int], arr: List[int]) -> bool:
         return sorted(target) == sorted(arr)    
+
+    # https://leetcode.com/problems/check-if-a-string-contains-all-binary-codes-of-size-k/
+    def hasAllCodes(self, s: str, k: int) -> bool:
+        return len({s[i : i + k] for i in range(len(s) - k + 1)}) == 2 ** k
