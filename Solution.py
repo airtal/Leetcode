@@ -1278,3 +1278,11 @@ class Solution:
         for p in people:
             ans.insert(p[1], p)
         return ans
+
+    # https://leetcode.com/problems/coin-change-2/
+    def change(self, amount: int, coins: List[int]) -> int:
+        f = [1] + [0] * amount
+        for coin in coins:
+            for v in range(coin, amount + 1):
+                f[v] += f[v - coin]
+        return f[amount]
