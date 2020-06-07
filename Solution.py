@@ -1286,3 +1286,7 @@ class Solution:
             for v in range(coin, amount + 1):
                 f[v] += f[v - coin]
         return f[amount]
+
+    # https://leetcode.com/problems/make-two-arrays-equal-by-reversing-sub-arrays/
+    def canBeEqual(self, target: List[int], arr: List[int]) -> bool:
+        return sorted(target) == sorted(arr)    
