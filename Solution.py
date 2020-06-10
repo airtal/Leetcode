@@ -1298,3 +1298,11 @@ class Solution:
     # https://leetcode.com/problems/power-of-two/
     def isPowerOfTwo(self, n: int) -> bool:
         return n and n & (-n) == n
+
+    # https://leetcode.com/problems/is-subsequence
+    def isSubsequence(self, s: str, t: str) -> bool:
+        m, i = len(s), 0
+        for ch in t:
+            if i == m: break
+            if ch == s[i]: i += 1
+        return i == m
