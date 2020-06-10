@@ -1306,3 +1306,7 @@ class Solution:
             if i == m: break
             if ch == s[i]: i += 1
         return i == m
+
+    # https://leetcode.com/problems/search-insert-position/
+    def searchInsert(self, nums: List[int], target: int) -> int:
+        return bisect.bisect_left(nums, target)
