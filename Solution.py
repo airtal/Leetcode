@@ -1310,3 +1310,16 @@ class Solution:
     # https://leetcode.com/problems/search-insert-position/
     def searchInsert(self, nums: List[int], target: int) -> int:
         return bisect.bisect_left(nums, target)
+
+    # https://leetcode.com/problems/sort-colors
+    def sortColors(self, nums: List[int]) -> None:
+        l, r, i = 0, len(nums) - 1, 0
+        while i <= r:
+            if nums[i] == 0:
+                nums[i], nums[l] = nums[l], 0
+                l += 1
+            elif nums[i] == 2:
+                nums[i], nums[r] = nums[r], 2
+                r -= 1
+                i -= 1
+            i += 1
