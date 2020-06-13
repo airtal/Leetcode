@@ -1323,3 +1323,26 @@ class Solution:
                 r -= 1
                 i -= 1
             i += 1
+
+    # https://leetcode.com/problems/insert-delete-getrandom-o1/
+class RandomizedSet:
+    def __init__(self):
+        self.index, self.nums = {}, []
+
+    def insert(self, val: int) -> bool:
+        if val in self.index: return False
+        self.nums += [val]
+        self.index[val] = len(self.nums) - 1
+        return True
+
+    def remove(self, val: int) -> bool:
+        if val not in self.index: return False
+        i = self.index[val]
+        self.index[self.nums[-1]] = i
+        self.index.pop(val)
+        self.nums[i] = self.nums[-1]
+        self.nums.pop()
+        return True
+
+    def getRandom(self) -> int:
+        return self.nums[randrange(0, len(self.nums))]
