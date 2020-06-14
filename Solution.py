@@ -1346,3 +1346,19 @@ class RandomizedSet:
 
     def getRandom(self) -> int:
         return self.nums[randrange(0, len(self.nums))]
+
+    # https://leetcode.com/problems/largest-divisible-subset
+    def largestDivisibleSubset(self, nums: List[int]) -> List[int]:
+        if not nums: return nums
+        nums.sort()
+        n, pos, res = len(nums), 0, []
+        f, prev = [1] * n, [-1] * n
+        for i in range(1, n):
+            for j in range(i):
+                if not nums[i] % nums[j] and f[j] + 1 > f[i]:
+                    f[i], prev[i] = f[j] + 1, j
+            if f[i] > f[pos]: pos = i
+        while pos >= 0:
+            res.append(nums[pos])
+            pos = prev[pos]
+        return res
