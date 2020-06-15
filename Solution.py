@@ -1362,3 +1362,23 @@ class RandomizedSet:
             res.append(nums[pos])
             pos = prev[pos]
         return res
+
+    # https://leetcode.com/problems/cheapest-flights-within-k-stops/
+    def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, K: int) -> int:
+        adjList = {}
+        for u, v, w in flights:
+            adjList[u] = adjList.get(u, []) + [(v, w)]
+        q, dis = deque([src]), [float("inf")] * n
+        dis[src], K = 0, K + 1
+        while q and K:
+            temp = deepcopy(dis)
+            for i in range(len(q)):
+                u = q.popleft()
+                for v, w in adjList.get(u, []):
+                    if dis[u] + w < temp[v]:
+                        temp[v] = dis[u] + w
+                        q.append(v)
+            dis = temp
+            K -= 1
+        return dis[dst] if dis[dst] != float("inf") else -1
+    
