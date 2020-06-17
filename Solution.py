@@ -1382,9 +1382,32 @@ class RandomizedSet:
             K -= 1
         return dis[dst] if dis[dst] != float("inf") else -1
    
-    # Search in a Binary Search Tree
+    # https://leetcode.com/problems/search-in-a-binary-search-tree
     def searchBST(self, root: TreeNode, val: int) -> TreeNode:
         if not root: return None
         if root.val == val: return root
         if root.val > val: return self.searchBST(root.left, val)
         return self.searchBST(root.right, val)
+
+    # https://leetcode.com/problems/surrounded-regions
+    def solve(self, board: List[List[str]]) -> None:
+        if not board: return board
+        m, n = len(board), len(board[0])
+        def helper(i, j):
+            if i < 0 or i >= m or j < 0 or j >= n or board[i][j] != 'O': return
+            board[i][j] = 'Y'
+            for dx, dy in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
+                helper(i + dx, j + dy)
+            
+        for i in range(n):
+            helper(0, i)
+            helper(m - 1, i)
+        
+        for i in range(1, m - 1):
+            helper(i, 0)
+            helper(i, n - 1)
+        
+        for i in range(m):
+            for j in range(n):
+                if board[i][j] == 'Y': board[i][j] = 'O'
+                elif board[i][j] == 'O': board[i][j] = 'X'    
