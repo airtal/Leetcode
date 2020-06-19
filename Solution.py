@@ -1411,3 +1411,15 @@ class RandomizedSet:
             for j in range(n):
                 if board[i][j] == 'Y': board[i][j] = 'O'
                 elif board[i][j] == 'O': board[i][j] = 'X'    
+
+    # https://leetcode.com/problems/h-index-ii/
+    def hIndex(self, citations: List[int]) -> int:
+        n = len(citations)
+        start, end = 0, n - 1
+        while start + 1 < end:
+            mid = start + (end - start) // 2
+            if citations[mid] >= n - mid: end = mid
+            else: start = mid
+        if n and citations[start] >= n - start: return n - start
+        if n and citations[end] >= n - end: return n - end
+        return 0
