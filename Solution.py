@@ -1423,3 +1423,29 @@ class RandomizedSet:
         if n and citations[start] >= n - start: return n - start
         if n and citations[end] >= n - end: return n - end
         return 0
+
+    # https://leetcode.com/problems/longest-duplicate-substring/
+    def longestDupSubstring(self, S: str) -> str:
+        PRIME = (int)(1e9 + 7)
+        def rabinKarp(l):
+            seen, h, base = collections.defaultdict(list), 0, pow(26, l - 1, PRIME)
+            for i in range(len(S)):
+                h = (h * 26 + ord(S[i]) - ord('a')) % PRIME
+                if i >= l - 1:
+                    if h in seen:
+                        substr_i = S[i - l + 1: i + 1]
+                        for j in seen[h]:
+                            substr_j = S[j - l + 1: j + 1]
+                            if substr_i == substr_j: return substr_i
+                    seen[h] += [i]
+                    h = ((h - (ord(S[i - l + 1]) - ord('a')) * base) % PRIME + PRIME) % PRIME
+            return None
+        start, end, res = 0, len(S), ""
+        while start + 1 < end:
+            mid = start + (end - start) // 2
+            tmp = rabinKarp(mid)
+            if tmp:
+                res, start = tmp, mid
+            else:
+                end = mid
+        return res
