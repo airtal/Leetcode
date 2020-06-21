@@ -1449,3 +1449,17 @@ class RandomizedSet:
             else:
                 end = mid
         return res
+
+    # https://leetcode.com/problems/permutation-sequence/
+    def getPermutation(self, n: int, k: int) -> str:
+        digits, res = [x + 1 for x in range(n)], ""
+        n, k = n - 1, k - 1
+        while k:
+            fac = factorial(n)
+            idx, k, n = k // fac, k % fac, n - 1
+            digit = digits[idx]
+            digits.remove(digit)
+            res += chr(digit + ord('0'))
+        for digit in digits:
+            res += chr(digit + ord('0'))
+        return res
