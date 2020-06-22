@@ -1463,3 +1463,18 @@ class RandomizedSet:
         for digit in digits:
             res += chr(digit + ord('0'))
         return res
+
+    # https://leetcode.com/problems/dungeon-game
+    def calculateMinimumHP(self, dungeon: List[List[int]]) -> int:
+        m, n = len(dungeon), len(dungeon[0])
+        @lru_cache(None)
+        def helper(i, j):
+            if i >= m or j >= n: return float('inf')
+            if i == m - 1 and j == n - 1:
+                return 1 if dungeon[i][j] > 0 else 1 - dungeon[i][j]
+            right = helper(i, j + 1) - dungeon[i][j]
+            if right <= 0: right = 1
+            down = helper(i + 1, j) - dungeon[i][j]
+            if down <= 0: down = 1
+            return min(right, down)
+        return helper(0, 0)
