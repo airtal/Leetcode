@@ -1478,3 +1478,13 @@ class RandomizedSet:
             if down <= 0: down = 1
             return min(right, down)
         return helper(0, 0)
+
+    # https://leetcode.com/problems/single-number-ii
+    def singleNumber(self, nums: List[int]) -> int:
+        res = 0
+        for i in range(32):
+            cnt = 0
+            for num in nums:
+                if (1 << i) & num: cnt += 1
+            res |= cnt % 3 << i
+        return res if res < (1 << 31) else res - (1 << 32)
