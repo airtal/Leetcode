@@ -1488,3 +1488,13 @@ class RandomizedSet:
                 if (1 << i) & num: cnt += 1
             res |= cnt % 3 << i
         return res if res < (1 << 31) else res - (1 << 32)
+
+    # https://leetcode.com/problems/count-complete-tree-nodes/
+    def countNodes(self, root: TreeNode) -> int:
+        def getDepth(root):
+            if not root: return 0
+            return getDepth(root.left) + 1
+        d = getDepth(root)
+        if not d: return 0
+        if getDepth(root.right) == d - 1: return self.countNodes(root.right) + (1 << (d - 1))
+        return self.countNodes(root.left) + (1 << (d - 2))
