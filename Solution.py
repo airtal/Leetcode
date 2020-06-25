@@ -1498,3 +1498,11 @@ class RandomizedSet:
         if not d: return 0
         if getDepth(root.right) == d - 1: return self.countNodes(root.right) + (1 << (d - 1))
         return self.countNodes(root.left) + (1 << (d - 2))
+
+    # https://leetcode.com/problems/unique-binary-search-trees
+    def numTrees(self, n: int) -> int:
+        f = [1, 1] + [0] * (n - 1)
+        for i in range(2, n + 1):
+            for j in range(i):
+                f[i] += f[j] * f[i - 1 - j]
+        return f[n]
