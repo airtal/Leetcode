@@ -1518,3 +1518,13 @@ class RandomizedSet:
             else:
                 i += 1
         return 0
+
+    # https://leetcode.com/problems/sum-root-to-leaf-numbers
+    def sumNumbers(self, root: TreeNode) -> int:
+        if not root: return 0
+        def helper(root, aggVal):
+            if not root.left and not root.right: return aggVal * 10 + root.val
+            res = helper(root.left, aggVal * 10 + root.val) if root.left else 0
+            res += helper(root.right, aggVal * 10 + root.val) if root.right else 0
+            return res
+        return helper(root, 0)
