@@ -1506,3 +1506,15 @@ class RandomizedSet:
             for j in range(i):
                 f[i] += f[j] * f[i - 1 - j]
         return f[n]
+
+    # https://leetcode.com/problems/find-the-duplicate-number
+    def findDuplicate(self, nums: List[int]) -> int:
+        n, i = len(nums), 0
+        while i < n:
+            x = nums[i]
+            if x != i + 1:
+                if nums[x - 1] == x: return x
+                nums[i], nums[x - 1] = nums[x - 1], x
+            else:
+                i += 1
+        return 0
