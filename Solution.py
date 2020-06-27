@@ -1528,3 +1528,17 @@ class RandomizedSet:
             res += helper(root.right, aggVal * 10 + root.val) if root.right else 0
             return res
         return helper(root, 0)
+
+    # https://leetcode.com/problems/perfect-squares/
+    def numSquares(self, n: int) -> int:
+        squares = set([x * x for x in range(1, floor(sqrt(n)) + 1)])
+        @lru_cache(None)
+        def helper(n, cnt):
+            if cnt == 1:
+                return n in squares
+            for x in squares:
+                if x < n and helper(n - x, cnt - 1): return True
+            return False
+        for i in range(1, n + 1):
+            if helper(n, i): return i
+        return n
