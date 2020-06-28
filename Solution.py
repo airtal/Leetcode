@@ -1542,3 +1542,17 @@ class RandomizedSet:
         for i in range(1, n + 1):
             if helper(n, i): return i
         return n
+
+    # https://leetcode.com/problems/reconstruct-itinerary/
+    def findItinerary(self, tickets: List[List[str]]) -> List[str]:
+        adjList = collections.defaultdict(list)
+        for u, v in tickets:
+            heappush(adjList[u], v)
+        def visit(cur, res):
+            heap = adjList[cur]
+            while heap:
+                visit(heappop(heap), res)
+            res.append(cur)
+        res = []
+        visit("JFK", res)
+        return reversed(res)
