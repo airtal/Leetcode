@@ -1556,3 +1556,7 @@ class RandomizedSet:
         res = []
         visit("JFK", res)
         return reversed(res)
+
+    # https://leetcode.com/problems/arranging-coins
+    def arrangeCoins(self, n: int) -> int:
+        return floor((sqrt(1 + 8 * n) - 1) / 2)
