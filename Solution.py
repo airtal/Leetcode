@@ -1560,3 +1560,12 @@ class RandomizedSet:
     # https://leetcode.com/problems/arranging-coins
     def arrangeCoins(self, n: int) -> int:
         return floor((sqrt(1 + 8 * n) - 1) / 2)
+
+    # https://leetcode.com/problems/binary-tree-level-order-traversal-ii/
+    def levelOrderBottom(self, root: TreeNode) -> List[List[int]]:
+        q, res = [root], []
+        while q:
+            res.append([node.val for node in q if node])
+            q = [child for node in q if node for child in (node.left, node.right)]
+        # res[-1] is [], starting from -2, every -1th to reverse
+        return res[-2::-1]
