@@ -1569,3 +1569,12 @@ class RandomizedSet:
             q = [child for node in q if node for child in (node.left, node.right)]
         # res[-1] is [], starting from -2, every -1th to reverse
         return res[-2::-1]
+
+    # https://leetcode.com/problems/prison-cells-after-n-days/
+    def prisonAfterNDays(self, cells: List[int], N: int) -> List[int]:
+        for i in range((N - 1) % 14 + 1):
+            tmp = [0] * 8
+            for j in range(1, 7):
+                tmp[j] = 1 if cells[j - 1] == cells[j + 1] else 0
+            cells = tmp
+        return cells
