@@ -1590,3 +1590,11 @@ class RandomizedSet:
             if ugly[p3] * 3 == cand: p3 += 1
             if ugly[p5] * 5 == cand: p5 += 1
         return ugly[n - 1]
+
+    # https://leetcode.com/problems/hamming-distance
+    def hammingDistance(self, x: int, y: int) -> int:
+        xor, res = x ^ y, 0
+        while xor:
+            res += 1
+            xor = xor & (xor - 1)
+        return res
