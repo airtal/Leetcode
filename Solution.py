@@ -1598,3 +1598,16 @@ class RandomizedSet:
             res += 1
             xor = xor & (xor - 1)
         return res
+
+    # https://leetcode.com/problems/plus-one/
+    def plusOne(self, digits: List[int]) -> List[int]:
+        digits[-1] += 1
+        i = len(digits) - 1
+        while i and digits[i] > 9:
+            digits[i - 1] += 1
+            digits[i] %= 10
+            i -= 1
+        if digits[i] > 9:
+            digits[i] %= 10
+            digits = [1] + digits
+        return digits
