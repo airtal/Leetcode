@@ -1611,3 +1611,15 @@ class RandomizedSet:
             digits[i] %= 10
             digits = [1] + digits
         return digits
+
+    # https://leetcode.com/problems/island-perimeter
+    def islandPerimeter(self, grid: List[List[int]]) -> int:
+        if not grid: return 0
+        cnt, left, up = 0, 0, 0
+        for i in range(len(grid)):
+            for j in range(len(grid[i])):
+                if grid[i][j]:
+                    cnt += 1
+                    if j >= 1 and grid[i][j - 1]: left += 1
+                    if i >= 1 and grid[i - 1][j]: up += 1
+        return cnt * 4 - left * 2 - up * 2
