@@ -1642,3 +1642,19 @@ class RandomizedSet:
                 elif nums[j] + nums[k] < -nums[i]: j += 1
                 else: k -= 1
         return res
+
+    # https://leetcode.com/problems/maximum-width-of-binary-tree/
+    def widthOfBinaryTree(self, root: TreeNode) -> int:
+        if not root: return 0
+        q, res = deque(), 0
+        q.append((root, 0))
+        while q:
+            first, last = 0, -1
+            for i in range(len(q)):
+                node, idx = q.popleft()
+                if not i: first = idx
+                last = idx
+                if node.left: q.append((node.left, idx * 2))
+                if node.right: q.append((node.right, idx * 2 + 1))
+            res = max(res, last - first + 1)
+        return res
