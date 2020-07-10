@@ -1658,3 +1658,18 @@ class RandomizedSet:
                 if node.right: q.append((node.right, idx * 2 + 1))
             res = max(res, last - first + 1)
         return res
+
+    # https://leetcode.com/problems/flatten-a-multilevel-doubly-linked-list/
+    def flatten(self, head: 'Node') -> 'Node':
+        if not head: return head
+        dummy = Node(-1, None, head, None)
+        def helper(node):
+            if node.child:
+                tail = helper(node.child)
+                tail.next = node.next
+                if node.next: node.next.prev = tail
+                node.next, node.child.prev = node.child, node
+                node.child, node = None, tail
+            return helper(node.next) if node.next else node
+        helper(head)
+        return dummy.next
